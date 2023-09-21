@@ -1,15 +1,16 @@
 package main
 
 import (
-	"time"
-	"fmt"
-	"log"
 	"encoding/json"
-	"io/ioutil"
-	"go-tracking/models"
+	"fmt"
 	_packageClient "go-tracking/client"
 	"go-tracking/client/httpsocket"
 	_packageUcase "go-tracking/client/usecase"
+	"go-tracking/models"
+	"log"
+	"os"
+	"time"
+
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -36,19 +37,19 @@ func main() {
 	go func() {
 
 		// Read JSON data from "data/tracking.json"
-		data, err := ioutil.ReadFile("data/tracking.json")
+		data, err := os.ReadFile("data/tracking.json")
 		if err != nil {
 			log.Println("Error reading JSON data:", err)
 			return
 		}
-	
+
 		// Parse JSON data into a slice of TrackingData
 		var trackingData []TrackingData
 		if err := json.Unmarshal(data, &trackingData); err != nil {
 			log.Println("Error unmarshaling JSON data:", err)
 			return
 		}
-		
+
 		// Now, you can loop through the trackingData slice and use the models package as needed.
 		for _, item := range trackingData {
 			tracking := &models.Tracking{
@@ -60,7 +61,7 @@ func main() {
 
 			time.Sleep(1 * time.Second)
 			pc.Publish(*tracking)
-	
+
 		}
 	}()
 
