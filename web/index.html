@@ -1,0 +1,53 @@
+<script src="https://unpkg.com/vue@3"></script>
+
+<div id="app">
+    <hr>
+    <div class="width: 100%; text-align:center;" v-for="loc in locations" :key="loc.latitude">
+        <pre>{{loc}}</pre>
+        <hr>
+    </div>
+</div>
+
+<script>
+    const { createApp } = Vue;
+
+    const app = createApp({
+        data() {
+            return {
+                locations: []
+            };
+        },
+        methods: {
+            formatDate(d) {
+                const hours = this.formatTwoDigits(d.getHours());
+                const minutes = this.formatTwoDigits(d.getMinutes());
+                const seconds = this.formatTwoDigits(d.getSeconds());
+                return hours + ":" + minutes + ":" + seconds;
+            },
+            formatTwoDigits(n) {
+                return n < 10 ? '0' + n : n;
+            }
+        },
+        created() {
+            // Initialize WebSocket connection when the Vue app is created
+            this.initWebSocket();
+        },
+        methods: {
+            initWebSocket() {
+                // Create a WebSocket connection
+                this.ws = new WebSocket(`ws://localhost:1323/packages/track`);
+
+                this.ws.onopen = () => {
+                    console.log('Connected to WebSocket');
+                }
+
+                this.ws.onmessage = (evt) => {
+                    const loc = JSON.parse(evt.data);
+                    this.locations.push(loc);
+                }
+            }
+        }
+    });
+
+    app.mount('#app');
+</script>
