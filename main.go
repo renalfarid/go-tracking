@@ -2,6 +2,7 @@ package main
 
 import (
 	"time"
+	"fmt"
 	"log"
 	"encoding/json"
 	"io/ioutil"
@@ -55,8 +56,9 @@ func main() {
 				Latitude:  item.Latitude,
 				Longitude: item.Longitude,
 			}
+			fmt.Println(*tracking)
 
-			time.Sleep(3 * time.Second)
+			time.Sleep(1 * time.Second)
 			pc.Publish(*tracking)
 	
 		}
