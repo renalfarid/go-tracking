@@ -2,9 +2,9 @@ package httpsocket
 
 import (
 	"context"
-	"fmt"
 
 	"go-tracking/models"
+
 	"github.com/gorilla/websocket"
 	"github.com/labstack/echo/v4"
 )
@@ -49,7 +49,6 @@ func (p *PackageHandler) Track(c echo.Context) error {
 				c.Logger().Error(err)
 				continue
 			}
-			fmt.Println(p)
 
 			err = wsConn.WriteJSON(p)
 			if err != nil {

@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	_packageClient "go-tracking/client"
 	"go-tracking/client/httpsocket"
 	_packageUcase "go-tracking/client/usecase"
@@ -57,7 +56,6 @@ func main() {
 				Latitude:  item.Latitude,
 				Longitude: item.Longitude,
 			}
-			fmt.Println(*tracking)
 
 			time.Sleep(1 * time.Second)
 			pc.Publish(*tracking)

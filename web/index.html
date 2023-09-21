@@ -44,6 +44,7 @@
                 this.ws.onmessage = (evt) => {
                     const loc = JSON.parse(evt.data);
                     this.locations.push(loc);
+                    console.log(loc);
                 }
             }
         }
